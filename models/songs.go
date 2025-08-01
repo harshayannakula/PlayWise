@@ -1,6 +1,9 @@
 package models
 
-import "time"
+import (
+	"fmt"
+	"time"
+)
 
 // Song represents the metadata and runtime attributes of a single song.
 type Song struct {
@@ -12,4 +15,11 @@ type Song struct {
 	VolumeLevel float64
 	AddedAt     time.Time
 	PlayedAt    time.Time
+}
+
+var id int = 0
+
+func UniqueID() string {
+	id++
+	return fmt.Sprintf("song-%d", id)
 }
