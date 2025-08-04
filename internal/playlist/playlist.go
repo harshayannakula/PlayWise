@@ -45,6 +45,21 @@ func (p *Playlist) AddSong(title string, artist string, duration time.Duration) 
 	p.Size++
 }
 
+func (p *Playlist) Addsong(song *models.Song) {
+	song.ID = models.UniqueID()
+	song.AddedAt = time.Now()
+	newNode := &SongNode{Song: song}
+	if p.Head == nil {
+		p.Head = newNode
+		p.Tail = newNode
+	} else {
+		p.Tail.Next = newNode
+		newNode.Prev = p.Tail
+		p.Tail = newNode
+	}
+	p.Size++
+}
+
 func (p *Playlist) DeleteSong(index int) error {
 	if index < 0 || index >= p.Size {
 		return errors.New("invalid index")

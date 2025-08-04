@@ -43,3 +43,8 @@ func (h *PlaybackHistory) Peek() (*models.Song, error) {
 	}
 	return h.stack[len(h.stack)-1], nil
 }
+
+// GetStack returns the current playback history stack (read-only)
+func (h *PlaybackHistory) GetStack() []*models.Song {
+	return h.stack
+}
