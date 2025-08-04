@@ -8,12 +8,15 @@ import (
 	"PlayWise/models"
 )
 
+// SongNode represents a node in the doubly linked list for the playlist
 type SongNode struct {
 	Song *models.Song
 	Prev *SongNode
 	Next *SongNode
 }
 
+// Playlist represents a playlist containing songs
+// It uses a doubly linked list to store the songs, allowing for efficient insertion and deletion
 type Playlist struct {
 	Name string
 	Head *SongNode
@@ -25,6 +28,7 @@ func NewPlaylist(name string) *Playlist {
 	return &Playlist{Name: name}
 }
 
+// AddSong adds a new song to the end of the playlist
 func (p *Playlist) AddSong(title string, artist string, duration time.Duration) {
 	song := &models.Song{
 		ID:       models.UniqueID(),
@@ -45,6 +49,7 @@ func (p *Playlist) AddSong(title string, artist string, duration time.Duration) 
 	p.Size++
 }
 
+// Addsong adds an existing song to the playlist
 func (p *Playlist) Addsong(song *models.Song) {
 	song.ID = models.UniqueID()
 	song.AddedAt = time.Now()
@@ -60,6 +65,8 @@ func (p *Playlist) Addsong(song *models.Song) {
 	p.Size++
 }
 
+// DeleteSong removes a song from the playlist by its index
+// It returns an error if the index is invalid
 func (p *Playlist) DeleteSong(index int) error {
 	if index < 0 || index >= p.Size {
 		return errors.New("invalid index")
@@ -86,6 +93,7 @@ func (p *Playlist) DeleteSong(index int) error {
 	return nil
 }
 
+// MoveSong moves a song from one index to another in the playlist
 func (p *Playlist) MoveSong(fromIndex, toIndex int) error {
 	if fromIndex < 0 || fromIndex >= p.Size || toIndex < 0 || toIndex >= p.Size {
 		return errors.New("invalid index")
@@ -139,6 +147,7 @@ func (p *Playlist) MoveSong(fromIndex, toIndex int) error {
 	return nil
 }
 
+// Reverse reverses the order of songs in the playlist
 func (p *Playlist) Reverse() {
 	current := p.Head
 	var prev *SongNode
