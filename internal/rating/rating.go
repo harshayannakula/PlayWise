@@ -81,3 +81,12 @@ func deleteByID(node *RatingNode, songID string, rating int) error {
 	}
 	return errors.New("song not found")
 }
+
+func TraverseAndCount(node *RatingNode, counts map[int]int) {
+	if node == nil {
+		return
+	}
+	TraverseAndCount(node.Left, counts)
+	counts[node.Rating] += len(node.Songs)
+	TraverseAndCount(node.Right, counts)
+}
